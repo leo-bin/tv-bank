@@ -41,8 +41,6 @@ public class UploadServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
         String userName = (String) request.getSession().getAttribute("userName");//得到当前登录用户的用户名
 
         // 检测是否为多媒体上传

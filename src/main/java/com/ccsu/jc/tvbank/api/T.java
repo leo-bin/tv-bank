@@ -1,7 +1,6 @@
 package com.ccsu.jc.tvbank.api;
 
 import com.ccsu.jc.tvbank.chaxun.TestMain;
-import com.ccsu.jc.tvbank.config.Auth;
 import com.ccsu.jc.tvbank.domain.*;
 import com.ccsu.jc.tvbank.service.MessageService;
 import com.ccsu.jc.tvbank.service.UserListService;
@@ -58,9 +57,6 @@ public class T {
     @RequestMapping("index.sf")
     public String test() {
         return "forward:/logoone.sf";
-
-        //return "redirect:/abc/default.html";  //跳转
-        //return "forward:/abc/default.html";   //前进
     }
 
 
@@ -107,7 +103,6 @@ public class T {
         String sbb = gson.toJson(list);
         out.write(sbb);
     }
-    // querendingdan.sf
 
     @RequestMapping(value = "querendingdan1.sf", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public @ResponseBody
@@ -115,7 +110,6 @@ public class T {
             throws IOException {
         String userName = (String) request.getSession().getAttribute("userName");
         List<UserEntity> user = userListServiceImpl.userlistUserName(userName);
-        // user.getUserID();
         // 设置编码
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
@@ -148,12 +142,6 @@ public class T {
         return "zhuce";
     }
 
-    @Auth(validate = false)
-    @RequestMapping("login.sf")
-    public String login() {
-        return "loginnew";
-    }
-
     // 修改支付密码界面
     @RequestMapping("Tiaozhuanshouye.sf")
     public String Tiaozhuanshouye() {
@@ -163,18 +151,14 @@ public class T {
     // 信息修改界面
     @RequestMapping("User_full_information.sf")
     public ModelAndView User_full_information(HttpServletRequest request) {
-
         // 得到登录用户的名字
         String userName = (String) request.getSession().getAttribute("userName");
         UserEntity user = userListServiceImpl.userlist(userName);
         Map model = new HashMap();
 
         model.put("user", user);// userlist是个Arraylist之类的
-        // System.out.println(user.getUserRMB());
 
-        // return "User_full_information";
         return new ModelAndView("User_full_information", model);
-
     }
 
     // 修改登录密码界面
@@ -195,7 +179,6 @@ public class T {
             }
         }
         return "Update_login_password";
-
     }
 
     // 修改邮箱界面
@@ -212,9 +195,7 @@ public class T {
         } else {
             request.setAttribute("PassWordErro", "输入不能为空!");
         }
-
         return "Update_email";
-
     }
 
     // 修改手机界面
@@ -382,7 +363,7 @@ public class T {
     public String exect(HttpServletRequest request) {
         // 将session里面的用户信息全部清空
         request.getSession().removeAttribute("userName");
-        return "loginnew";
+        return "login";
 
     }
 
@@ -509,7 +490,6 @@ public class T {
         Map model = new HashMap();
         model.put("user", user);
         return new ModelAndView("xiaoheiwu", model);
-
     }
 
     // 将数据库里面所有的视频查询出来 发送到首页面
@@ -772,9 +752,7 @@ public class T {
     /************************ 文件上传 ****************************************/
     @RequestMapping("videoFileTop")
     public String videoFileTop(HttpServletRequest request) {
-
         return "videoFileTop";
-
     }
 
     /***

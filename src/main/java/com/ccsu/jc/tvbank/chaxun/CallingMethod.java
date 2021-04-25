@@ -20,17 +20,15 @@ public class CallingMethod extends TimerTask {
             //加载数据库驱动，注册到去送管理器  0-
             Class.forName("com.mysql.jdbc.Driver");
 
-            String url = "jdbc:mysql://127.0.0.1:3306/bilibili?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&amp;failOverReadOnly=false";
+            String url = "jdbc:mysql://127.0.0.1:3306/tv_bank?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&amp;failOverReadOnly=false";
 
             String username = "root";
 
-            String password = "root";
+            String password = "115118";
 
             Connection conn = DriverManager.getConnection(url, username, password);
 
             if (conn != null) {
-
-                // System.out.println("数据库连接成功!");
                 /*******************************************************************/
                 //有多少用户
                 /*******************************************************************/
@@ -38,7 +36,6 @@ public class CallingMethod extends TimerTask {
                 String sql = "SELECT count(*) FROM user";    //要执行的SQL
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
-                    // System.out.println(rs.getInt(1));
                     count = rs.getInt(1);//得到有多少条数据
                 }
 

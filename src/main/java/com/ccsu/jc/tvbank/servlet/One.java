@@ -18,10 +18,6 @@ public class One extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //System.out.println("11");
-
-        //request.getRequestDispatcher("http://127.0.0.1:888/bilibili/static/adminjs/index.html").forward(request,response);
-        //System.out.println("测试");
         request.getRequestDispatcher("logoone.sf").forward(request, response);
     }
 
