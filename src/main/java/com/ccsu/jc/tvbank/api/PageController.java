@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * @author binLi
+ * @author jc
  * @date 2021/4/25 7:16 下午
  * Description：页面跳转器
  **/

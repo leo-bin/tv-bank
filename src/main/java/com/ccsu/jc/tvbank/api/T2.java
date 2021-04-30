@@ -14,7 +14,6 @@ public class T2 {
 	
 	@RequestMapping("registertest.sf")
 	public String web3(){
-		
 		System.out.println("测试是否进入此方法");
 		UserEntity user = new UserEntity();
 		user.setUserID("1238");
@@ -30,31 +29,7 @@ public class T2 {
 		}else{
 			System.out.println("注册失败");
 		}
-		
-		
 		return "login";
-		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
 }

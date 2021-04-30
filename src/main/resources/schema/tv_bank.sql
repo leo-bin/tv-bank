@@ -1,3 +1,7 @@
+CREATE DATABASE tv_bank;
+
+USE tv_bank;
+
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
