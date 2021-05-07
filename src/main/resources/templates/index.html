@@ -1,5 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<!--引入thymeleaf模板引擎-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>首页</title>
@@ -12,6 +14,7 @@
     <script src="../static/Homepage/js/jquery.min.js"></script>
     <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
     <script src="../static/bilibiliIndex/js/script.js"></script>
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
 </head>
 <body>
 
@@ -25,16 +28,31 @@
             <div class="page-width clearfix">
                 <div class="header-top__nav">
                     <ul>
-                        <li class="item item-home"><a href="index.html">主站</a></li>
+                        <li class="item item-home"><a href="/page/index">主站</a></li>
                         <li class="item"><a href="/page/videoFileTop">我要投稿</a>
                     </ul>
                 </div>
 
+                <div class="search">
+                    <!--搜索表单-->
+                    <form class="layui-form" action="#" method="post" id="sitesearch">
+                        <fieldset>
+                            <input type="text" value="搜索一下" name="keyWords"
+                                   onfocus="this.value=(this.value=='搜索一下')? '' : this.value ;"/>
+                            <button class="layui-btn-radius" lay-submit lay-filter="search" id="search" alt="搜索一下">
+                                搜
+                            </button>
+                        </fieldset>
+                    </form>
+                </div>
+
                 <div class="header-top__user">
                     <div class="login-box">
-                        <a href="/page/login">登录</a> <span></span> <a href="/page/zhuce">注册</a>
+                        <a href="/page/login">登录</a> <span></span>
+                        <a href="/page/zhuce">注册</a>
                     </div>
                 </div>
+
                 <div class="header-top__user"
                      style="position: fixed; z-index: 999; width: 300px; height: 170px; background-color: #FCF6EB; margin-left: 55%; margin-top: 3%"
                      id="div2">
@@ -63,6 +81,7 @@
                     </div>
                 </div>
             </div>
+
             <script type="text/javascript">
                 $(document).ready(function () {
                     $("#div2").hide();
@@ -70,32 +89,41 @@
                 })
 
                 function asjdh() {//移出
-                    //alert("1");
                     $("#div2").hide();
                 }
 
                 function project() {//移入
-                    //alert("2");
                     $("#div2").show();
                 }
             </script>
+
+            <script type="text/javascript">
+                layui.use(['form', 'layer', 'jquery'], function () {
+                    // 操作对象
+                    var form = layui.form;
+
+                    //处理搜索,将搜索的关键字通过url传递给对应的页面
+                    form.on('submit(search)', function (data) {
+                        console.log(data.field);
+                        var keyWords = data.field.keyWords;
+                        console.log('ketWords=' + keyWords);
+                        var url = "search?keyWords=" + keyWords;
+                        window.open(url);
+                    })
+                });
+            </script>
+
+
         </div>
     </div>
     </div>
-    </div>
-    <div class="header-c">
-        <div class="page-width">
-            <a href="#" id="header_logo"></a>
-            <p id="header_title"></p>
-            <div class="header-title">欢迎来到tv-bank (゜-゜)つロ ~</div>
-        </div>
     </div>
 </header>
 
 <nav id="nav">
     <div class="page-width clearfix">
         <ul class="nav-list">
-            <li class="item item-home"><a href="index.sf" class="link">首页</a>
+            <li class="item item-home"><a href="/page/index" class="link">首页</a>
             </li>
             <li class="item"><a href="testshabi.sf" class="link">
                 <div class="num">
@@ -169,14 +197,6 @@
                 </div>
                 影视
             </a></li>
-            <li class="item item-square"><a href="testshabi.sf" class="link">广场</a>
-                <div class="nav-square__hover">
-                    <ul>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="item item-room"><a href="#" class="link">小黑屋</a></li>
         </ul>
         <div class="nav-gif" id="qiulingyang">
             <img src="/static/bilibiliIndex/images/cont/nav_img.gif" alt="求领养">
@@ -206,19 +226,19 @@
             </div>
             <a href="#" class="slider-more">More</a>
         </div>
+
         <div class="banner-list fr">
             <ul>
-                <c:forEach items="${fuck }" var="fuck">
-                    <li><a href="video.sf?dizhi=${fuck.videoAddress}&shipingID=${fuck.videoID}">
-                        <img src="${fuck.videoImage}" alt="#">
+                <li th:each="v:${video}">
+                    <a th:href="@{'video?dizhi='+${v.videoAddress}+'&shipingID='+${v.videoID}}">
+                        <img th:src="${v.videoImage}" alt="#">
                         <div class="info">
-                            <p class="title">${fuck.videoName }</p>
-                            <p class="author">up主：admin</p>
-                            <p class="play">播放：${fuck.videolookTime}</p>
+                            <p class="title" th:text="${v.videoName}"></p>
+                            <p class="author" th:text="'up主:'+${v.upName}"></p>h
+                            <p class="play" th:text="'播放：'+${v.videolookTime}"></p>
                         </div>
                     </a>
-                    </li>
-                </c:forEach>
+                </li>
             </ul>
             <a href="#" class="btn btn-prev">昨日</a> <a href="#" class="btn btn-next">一周</a>
         </div>
@@ -241,30 +261,26 @@
                     </div>
                 </div>
                 <ul class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
-                    <!-- 这里开始遍历 -->
-                    <c:forEach items="${list}" var="list">
-                        <li class="item"><a
-                                href="video.sf?dizhi=${list.videoAddress}&shipingID=${list.videoID}"
-                                class="img-link"> <img
-                                src="${list.videoImage}" alt="#">
-                            <span class="mask"></span> <span class="time">${list.videoTime}</span>
+                    <li class="item" th:each="v:${list}">
+                        <a th:href="@{'video?dizhi='+${v.videoAddress}+'&shipingID='+${v.videoID}}" class="img-link">
+                            <img th:src="${v.videoImage}" alt="#">
+                            <span class="mask"></span> <span class="time" th:text="${v.videoTime}"></span>
                         </a>
-                            <div class="img-info">
-                                <a href="video.sf?dizhi=${list.videoAddress}&shipingID=${list.videoID}"></a>
-                                <div class="btm">
-                                    <div class="user">
-                                        <i></i>admin
-                                    </div>
-                                    <div class="online">
-                                        <i></i>${list.videolookTime}
-                                    </div>
+                        <div class="img-info">
+                            <a th:href="@{'video?dizhi='+${v.videoAddress}+'&shipingID='+${v.videoID}}"></a>
+                            <div class="btm">
+                                <div class="user">
+                                    <i></i>admin
+                                </div>
+                                <div class="online" th:text="${v.videolookTime}">
+                                    <i></i>
                                 </div>
                             </div>
-                        </li>
-                    </c:forEach>
+                        </div>
+                    </li>
+
                 </ul>
             </div>
-
 
             <!-- 游戏 -->
             <div class="mainCont clearfix" id="game" js-move="true">
@@ -279,29 +295,29 @@
                             <a href="#" class="dynamic" id="shuaxin1"><i></i>392条新动态</a>
                         </div>
                     </div>
+
                     <ul class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
-                        <c:forEach items="${list2}" var="list2">
-                            <li class="item"><a
-                                    href="video.sf?dizhi=${list2.videoAddress}&shipingID=${list2.videoID}"
-                                    class="img-link"> <img
-                                    src="${list2.videoImage}" alt="#">
-                                <span class="mask"></span> <span class="time">${list2.videoTime}</span>
+
+                        <li class="item" th:each="list2:${list2}">
+                            <a th:href="'video?dizhi='+${list2.videoAddress}+'&shipingID='+${list2.videoID}"
+                               class="img-link">
+                                <img th:src="${list2.videoImage}" alt="#">
+                                <span class="mask"></span> <span class="time" th:text="${list2.videoTime}"></span>
                             </a>
-                                <div class="img-info">
-                                    <a
-                                            href="video.sf?dizhi=${list2.videoAddress}&shipingID=${list2.videoID}">${list2.videoName
-                                        }</a>
-                                    <div class="btm">
-                                        <div class="user">
-                                            <i></i>admin
-                                        </div>
-                                        <div class="online">
-                                            <i></i>${list2.videolookTime}
-                                        </div>
+                            <div class="img-info">
+                                <a th:href="'video?dizhi='+${list2.videoAddress}+'&shipingID='+${list2.videoID}"
+                                   th:text="${list2.videoName}"></a>
+                                <div class="btm">
+                                    <div class="user" th:text="${list2.upName}">
+                                        <i></i>
+                                    </div>
+                                    <div class="online" th:text="${list2.videolookTime}">
+                                        <i></i>
                                     </div>
                                 </div>
-                            </li>
-                        </c:forEach>
+                            </div>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -321,28 +337,25 @@
                     </div>
                     <ul class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
 
-                        <c:forEach items="${list3}" var="list3">
-                            <li class="item"><a
-                                    href="video.sf?dizhi=${list3.videoAddress}&shipingID=${list3.videoID}"
-                                    class="img-link"> <img
-                                    src="${list3.videoImage}" alt="#">
-                                <span class="mask"></span> <span class="time">${list3.videoTime}</span>
+                        <li class="item" th:each="list3:${list3}">
+                            <a th:href="'video?dizhi='+${list3.videoAddress}+'&shipingID='+${list3.videoID}"
+                               class="img-link">
+                                <img th:src="${list3.videoImage}" alt="#">
+                                <span class="mask"></span> <span class="time" th:text="${list3.videoTime}"></span>
                             </a>
-                                <div class="img-info">
-                                    <a
-                                            href="video.sf?dizhi=${list3.videoAddress}&shipingID=${list3.videoID}">${list3.videoName
-                                        }</a>
-                                    <div class="btm">
-                                        <div class="user">
-                                            <i></i>admin
-                                        </div>
-                                        <div class="online">
-                                            <i></i>${list3.videolookTime}
-                                        </div>
+                            <div class="img-info">
+                                <a th:href="'video?dizhi='+${list3.videoAddress}+'&shipingID='+${list3.videoID}"
+                                   th:text="${list3.videoName}"></a>
+                                <div class="btm">
+                                    <div class="user" th:text="${list3.upName}">
+                                        <i></i>
+                                    </div>
+                                    <div class="online" th:text="${list3.videolookTime}">
+                                        <i></i>
                                     </div>
                                 </div>
-                            </li>
-                        </c:forEach>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

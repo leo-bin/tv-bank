@@ -42,7 +42,7 @@ function showBg() {
 	var bw = $("body").width();
 /* 	$("#sid").click(function(){
 		//alert("123");
-		 window.open("Shangchuan.jsp","_blank","toolbar=yes, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=no, copyhistory=yes, width=400, height=200");
+		 window.open("Shangchuan.html","_blank","toolbar=yes, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=no, copyhistory=yes, width=400, height=200");
 
 	});  */
 	

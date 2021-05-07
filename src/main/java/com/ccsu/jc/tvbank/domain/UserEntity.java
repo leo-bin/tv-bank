@@ -1,6 +1,15 @@
 package com.ccsu.jc.tvbank.domain;
 
-public class UserEntity {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserEntity implements Serializable {
     private String userID;//用户ID
     private String userMingzi;//用户真实名字
     private String userName;//用户名
@@ -18,143 +27,6 @@ public class UserEntity {
     private String userIP;//登录IP地址
     private String userPaypassword;//支付密码
     private String userRMB;//用户余额
-
-
-    public String getUserRMB() {
-        return userRMB;
-    }
-
-    public void setUserRMB(String userRMB) {
-        this.userRMB = userRMB;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public String getUserMingzi() {
-        return userMingzi;
-    }
-
-    public void setUserMingzi(String userMingzi) {
-        this.userMingzi = userMingzi;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
-    }
-
-    public String getUseryinghangka() {
-        return useryinghangka;
-    }
-
-    public void setUseryinghangka(String useryinghangka) {
-        this.useryinghangka = useryinghangka;
-    }
-
-    public String getUsersex() {
-        return usersex;
-    }
-
-    public void setUsersex(String usersex) {
-        this.usersex = usersex;
-    }
-
-    public String getUserHand() {
-        return userHand;
-    }
-
-    public void setUserHand(String userHand) {
-        this.userHand = userHand;
-    }
-
-    public String getUserAddress() {
-        return userAddress;
-    }
-
-    public void setUserAddress(String userAddress) {
-        this.userAddress = userAddress;
-    }
-
-    public String getUserPhone() {
-        return userPhone;
-    }
-
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
-    }
-
-    public String getUserQQ() {
-        return userQQ;
-    }
-
-    public void setUserQQ(String userQQ) {
-        this.userQQ = userQQ;
-    }
-
-    public String getUserEmial() {
-        return userEmial;
-    }
-
-    public void setUserEmial(String userEmial) {
-        this.userEmial = userEmial;
-    }
-
-    public String getUserCollection() {
-        return userCollection;
-    }
-
-    public void setUserCollection(String userCollection) {
-        this.userCollection = userCollection;
-    }
-
-    public String getUserState() {
-        return userState;
-    }
-
-    public void setUserState(String userState) {
-        this.userState = userState;
-    }
-
-    public String getUserLoginTime() {
-        return userLoginTime;
-    }
-
-    public void setUserLoginTime(String userLoginTime) {
-        this.userLoginTime = userLoginTime;
-    }
-
-    public String getUserIP() {
-        return userIP;
-    }
-
-    public void setUserIP(String userIP) {
-        this.userIP = userIP;
-    }
-
-    public String getUserPaypassword() {
-        return userPaypassword;
-    }
-
-    public void setUserPaypassword(String userPaypassword) {
-        this.userPaypassword = userPaypassword;
-    }
 
 
 }

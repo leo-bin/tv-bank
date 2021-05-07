@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //判断用户是否登录 访问了不该访问的页面
         String userName = (String) request.getSession().getAttribute("userName");
         if (userName != null) {
@@ -17,8 +16,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         }
         //访问的用户没有登录...
         //跳转页面
-        String addr = "";
-
+        String addr;
         if (request.getQueryString() != null) {
             //这个是带参数的!
             addr = request.getRequestURI() + "?" + request.getQueryString();
@@ -30,7 +28,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         // jiequ  这个地址是用户想访问的地址
         request.getSession().setAttribute("jiequ", jiequ);
 
-        response.sendRedirect("login.sf");
+        response.sendRedirect("/login");
         return false;
     }
 

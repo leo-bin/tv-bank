@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * @author binLi
+ * @author jc
  * @date 2021/4/25 4:38 下午
  * Description：
  **/

@@ -6,7 +6,6 @@ import java.lang.annotation.*;
 @Inherited
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-
 public @interface Auth {
-	 boolean validate() default true;
+    boolean validate() default true;
 }

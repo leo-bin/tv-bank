@@ -1,47 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
-<link rel="stylesheet"
-      href="../static/Homepage/video/bootstrap.min.css">
-<link rel="stylesheet"
-      href="../static/Homepage/video/dashboard.css">
-<link rel="stylesheet"
-      href="../static/Homepage/video/style.css">
-
+<link rel="stylesheet" href="../static/Homepage/video/bootstrap.min.css">
+<link rel="stylesheet" href="../static/Homepage/video/dashboard.css">
+<link rel="stylesheet" href="../static/Homepage/video/style.css">
+<link rel="stylesheet" href="/static/Homepage/css/style.css">
+<link rel="stylesheet" href="/static/Homepage/css/example.css">
+<!-- 联系我们css js jq -->
+<link rel="stylesheet" href="/static/cebianlan/css/style.css">
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/Homepage/video/bootstrap.min.css">
+<link rel="stylesheet" href="/static/Homepage/video/dashboard.css">
+<link rel="stylesheet" href="/static/Homepage/video/style.css">
 <script src="/static/Homepage/js/jquery.min.js"></script>
-
+<script src="/static/Homepage/js/sHover.min.js"></script>
+<script src="/static/Homepage/js/jquery.min.js"></script>
+<script src="/static/cebianlan/js/index.js"></script>
+<script src="/static/cebianlan/js/jq22.js"></script>
+<script src="/static/cebianlan/js/jquery-1.10.2.min.js"></script>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>视频展示</title>
 </head>
 
-<link rel="stylesheet" href="/static/Homepage/css/style.css">
-<link rel="stylesheet"
-      href="/static/Homepage/css/example.css">
-<script src="/static/Homepage/js/sHover.min.js"></script>
-<script src="/static/Homepage/js/jquery.min.js"></script>
-
-<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet"
-      href="/static/Homepage/video/bootstrap.min.css">
-<link rel="stylesheet"
-      href="/static/Homepage/video/dashboard.css">
-<link rel="stylesheet"
-      href="/static/Homepage/video/style.css">
-
-<!-- 联系我们css js jq -->
-<link rel="stylesheet" href="/static/cebianlan/css/style.css">
-<script src="/static/cebianlan/js/index.js"></script>
-<script src="/static/cebianlan/js/jq22.js"></script>
-<script src="/static/cebianlan/js/jquery-1.10.2.min.js"></script>
-</head>
-
 <script language="javascript">
     $(document).ready(
         function () {
-
-            /* 	1st example	*/
-            /// wrap inner content of each anchor with first layer and append background layer
             $("#menu1 li a").wrapInner('<span class="out"></span>').append(
                 '<span class="bg"></span>');
 
@@ -79,7 +62,6 @@
             });
 
             /*	2nd example	*/
-
             $("#menu2 li a").wrapInner('<span class="out"></span>');
 
             $("#menu2 li a").each(
@@ -110,8 +92,6 @@
 </script>
 
 <body>
-
-
 <div class="diyoumask" style="height: 2000px;"></div>
 
 <script type="text/javascript">
@@ -145,7 +125,6 @@
                                              style="font-size: 10px; color: white; text-decoration: none">注册</a></span>
         </button>
 
-
         <button class="btn btn-primary ladda-button" data-style="expand-left"
                 id="userxinxi">
 				<span class="ladda-label"><a href="User_full_information.sf"
@@ -154,6 +133,7 @@
 				</a></span>
         </button>
     </div>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $("#userxinxi").click(function () {
@@ -169,6 +149,7 @@
         });
     </script>
 </div>
+
 <div>
     <img src="../static/Homepage/images/bilibili.png" style="width: 100%;"/>
 </div>
@@ -214,12 +195,11 @@
 
 <div id="menu1" class="menu">
     <ul>
-        <li><a href="logoone.sf">首 页</a></li>
+        <li><a href="/page/index">首 页</a></li>
         <li><a href="testshabi.sf">动 画</a></li>
         <li><a href="testshabi.sf">番 剧</a></li>
         <li><a href="testshabi.sf">国 创</a></li>
         <li><a href="testshabi.sf">音 乐</a></li>
-        <li><a href="#">测 试</a></li>
         <li><a href="xiaoheiwu.sf">小 黑 屋</a></li>
     </ul>
     <div class="cls"></div>
@@ -238,17 +218,14 @@
     <button type="button" id="wei">尾页</button>
     &nbsp;<input type="text" id="text"
                  onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
-                 onblur="this.v();" style="width: 80px; height: 22px"></input> &nbsp;
+                 onblur="this.v();" style="width: 80px; height: 22px"> &nbsp;
     <button type="button" id="tiaozhuan">跳转</button>
 </div>
 
 <script src="/static/adminjs/liebiao.js"></script>
-</div>
-</div>
-</div>
-</div>
+
 
 <div class="clearfix"></div>
-</div>
+
 </body>
 </html>

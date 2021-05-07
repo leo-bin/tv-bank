@@ -18,10 +18,4 @@ public class HelloController {
     public String hello() {
         return "hello there～";
     }
-
-    @RequestMapping("tv_bank/index")
-    public String index() {
-        return "index";
-    }
-
 }
