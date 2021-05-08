@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.jc.tvbank.dao.UserDAO">
+
+    <select id="select" resultType="com.ccsu.jc.tvbank.domain.UserEntity">
+        select *
+        from tv_bank.user
+        where userName = #{userName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="userlistpage" resultType="com.ccsu.jc.tvbank.domain.UserEntity">
+        SELECT *
+        FROM user
+        LIMIT #{pageInt},15
+    </select>
+
+    <select id="listmohu" resultType="com.ccsu.jc.tvbank.domain.UserEntity">
+        select *
+        from tv_bank.user
+        where userMingzi LIKE #{usermohu}
+    </select>
+
+    <select id="userPhone" resultType="com.ccsu.jc.tvbank.domain.UserEntity">
+        select *
+        from tv_bank.user
+        where userPhone LIKE #{userPhone}
+        order by rand()
+        limit 3
+    </select>
+
+
+    <select id="userID" resultType="com.ccsu.jc.tvbank.domain.UserEntity">
+        select *
+        from tv_bank.user
+        where userID = #{userID}
+    </select>
+
+
+    <insert id="insert" parameterType="com.ccsu.jc.tvbank.domain.UserEntity">
+        insert into tv_bank.user(userID, userMingzi, userName, usersex, passWord, userHand, userAddress, userPhone,
+                                 userQQ, userEmail, userCollection, userState, userLoginTime, userIP)
+        VALUES (#{userID}, #{userMingzi}, #{userName}, #{usersex}, #{passWord}, #{userHand},
+                #{userPhone}, #{userQQ}, #{userEmail}, #{userCollection}, #{userState}, #{userLoginTime}, #{userIP})
+    </insert>
+
+    <update id="updateUser" parameterType="com.ccsu.jc.tvbank.domain.UserEntity">
+        update tv_bank.user
+        <set>
+            <if test="passWord!=null">
+                `passWord`=#{passWord},
+            </if>
+
+            <if test="userPhone!=null">
+                `userPhone`=#{userPhone},
+            </if>
+
+            <if test="userHand!=null">
+                `userHand`=#{userHand},
+            </if>
+
+            <if test="usersex!=null">
+                `usersex`=#{usersex},
+            </if>
+        </set>
+        where userName=#{userName}
+    </update>
+
+
+</mapper>

@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src="/static/Homepage/js/jquery.min.js"></script>
@@ -178,16 +178,16 @@
     </div>
 </div>
 
-
 <div id="testBox"></div>
-<script
-        src="/static/Homepage/videoPlay/js/fz-video.js"></script>
-<script>
-    var FZ_VIDEO = new createVideo("testBox", //容器的id
+<script src="/static/Homepage/videoPlay/js/fz-video.js"></script>
+
+<script th:inline="javascript" type="text/javascript">
+    var dizhi = [[${dizhi}]]
+    console.log("视频地址：" + dizhi)
+    var FZ_VIDEO = new createVideo("testBox",
         {
-            url: '/bilibili<%=request.getAttribute("dizhi")%>', //视频地址
-            autoplay: true
-            //是否自动播放
+            url: dizhi, //视频地址
+            autoplay: true //是否自动播放
         });
 </script>
 

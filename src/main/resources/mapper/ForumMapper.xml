@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.jc.tvbank.dao.ForumDAO">
+
+    <select id="selectOne" resultType="com.ccsu.jc.tvbank.domain.ForumEntity">
+        select *
+        from tv_bank.forum
+        where `forumID` = #{forumID}
+    </select>
+
+    <select id="forumEnt" resultType="com.ccsu.jc.tvbank.domain.ForumEntity">
+        select *
+        from tv_bank.forum
+        where `forumliebie` = #{forumliebie}
+        Order By `forumTime` Desc
+    </select>
+
+    <select id="forumReply" resultType="com.ccsu.jc.tvbank.domain.ForumReplyEntity">
+        select *
+        from tv_bank.forumreply
+        where `replytieziid` = #{forumReplyID}
+        Order By `replytime` Desc
+    </select>
+
+    <insert id="saveForum" parameterType="com.ccsu.jc.tvbank.domain.ForumEntity">
+        insert into tv_bank.forum(forumID, forumBT, forummessage, forumuserName, forumTime, forumliebie, forumAmount,
+                                  firumhand)
+        VALUES (#{forumID}, #{forumBT}, #{forummessage}, #{forumuserName}, #{forumTime}, #{forumliebie}, #{forumAmount},
+                #{firumhand})
+    </insert>
+
+    <insert id="saveForumReply" parameterType="com.ccsu.jc.tvbank.domain.ForumReplyEntity">
+        insert into tv_bank.forumreply(replyid, replyneirong, replytime, replyhand, replytieziid, replyname)
+        VALUES (#{replyid}, #{replyneirong}, #{replytime}, #{replyhand}, #{replytieziid}, #{replyname})
+    </insert>
+
+
+</mapper>

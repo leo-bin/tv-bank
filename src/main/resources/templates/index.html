@@ -28,8 +28,8 @@
             <div class="page-width clearfix">
                 <div class="header-top__nav">
                     <ul>
-                        <li class="item item-home"><a href="/page/index">主站</a></li>
-                        <li class="item"><a href="/page/videoFileTop">我要投稿</a>
+                        <li class="item item-home"><a href="/tv-bank/index">主站</a></li>
+                        <li class="item"><a href="/tv-bank/videoFileTop">我要投稿</a>
                     </ul>
                 </div>
 
@@ -48,8 +48,8 @@
 
                 <div class="header-top__user">
                     <div class="login-box">
-                        <a href="/page/login">登录</a> <span></span>
-                        <a href="/page/zhuce">注册</a>
+                        <a href="/tv-bank/login">登录</a> <span></span>
+                        <a href="/tv-bank/zhuce">注册</a>
                     </div>
                 </div>
 
@@ -230,7 +230,7 @@
         <div class="banner-list fr">
             <ul>
                 <li th:each="v:${video}">
-                    <a th:href="@{'video?dizhi='+${v.videoAddress}+'&shipingID='+${v.videoID}}">
+                    <a th:href="'video?dizhi='+${v.videoAddress}+'&shipingID='+${v.videoID} ">
                         <img th:src="${v.videoImage}" alt="#">
                         <div class="info">
                             <p class="title" th:text="${v.videoName}"></p>
@@ -262,12 +262,12 @@
                 </div>
                 <ul class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
                     <li class="item" th:each="v:${list}">
-                        <a th:href="@{'video?dizhi='+${v.videoAddress}+'&shipingID='+${v.videoID}}" class="img-link">
+                        <a th:href="'video?dizhi='+${v.videoAddress}+'&shipingID='+${v.videoID}" class="img-link">
                             <img th:src="${v.videoImage}" alt="#">
                             <span class="mask"></span> <span class="time" th:text="${v.videoTime}"></span>
                         </a>
                         <div class="img-info">
-                            <a th:href="@{'video?dizhi='+${v.videoAddress}+'&shipingID='+${v.videoID}}"></a>
+                            <a th:href="'video?dizhi='+${v.videoAddress}+'&shipingID='+${v.videoID}"></a>
                             <div class="btm">
                                 <div class="user">
                                     <i></i>admin

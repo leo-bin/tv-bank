@@ -20,5 +20,6 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
+  typeAliasesPackage: com.ccsu.jc.tvbank
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
