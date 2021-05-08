@@ -288,17 +288,19 @@
 
     <div class="wp" style="background-color: #E8E8E8" id="danmu">
         <ul id="slider" class="slider">
-            <c:forEach items="${messagelist}" var="messagelist">
-                <li>
-                    <a class="fl" href=""><img src="${messagelist.messageHand}" alt=""
-                                               width="70px" ;height="70px"/></a>
-                    <p>${messagelist.message}</p>
-                    <br>
-                    <p style="color: red;">留言者:<a href=""
-                                                  style="color: darkgoldenrod;text-decoration:none;">&nbsp;${messagelist.messageuserName}</a><span
-                            style="color: blue;">&nbsp;&nbsp;&nbsp;留言时间:${messagelist.messageTime}</span></p>
-                </li>
-            </c:forEach>
+            <li th:each="messagelist:${messagelist}">
+                <a class="fl" href="">
+                    <img th:src="${messagelist.messageHand}" alt="" width="70px" ;height="70px"/>
+                </a>
+                <p th:text="${messagelist.message}"></p>
+                <br>
+                <p style="color: red;">留言者:<a th:text="${messagelist.messageuserName}" href=""
+                                              style="color: darkgoldenrod;text-decoration:none;">&nbsp;</a>
+                    <span style="color: blue;" th:text="'留言时间:'+${messagelist.messageTime}">&nbsp;&nbsp;&nbsp;</span>
+                </p>
+            </li>
+
+
         </ul>
     </div>
 
@@ -409,18 +411,19 @@
             所有留言
         </p>
         <div id="messDivId">
-            <c:forEach items="${messagelist}" var="messagelist">
-                <div class="story">
-                    <div class="opbtn"></div>
-                    <p class="story_t">${messagelist.messageuserName}<span style="margin-left: 85%;">
+
+
+            <div class="story" th:each="messagelist:${messagelist}">
+                <div class="opbtn"></div>
+                <p class="story_t" th:text="${messagelist.messageuserName}"><span style="margin-left: 85%;">
 							<button type="button" value="查看留言" id="huifu">查看回复</button>
                         <button type="button" value="查看留言" id="liuyan">我要留言</button></span>
-                    </p>
-                    <p class="story_time">${messagelist.messageTime}</p>
-                    <p class="story_m">${messagelist.message}</p>
-                </div>
-                <div id="woyaochakan" style="display: none">这 里可以查看</div>
-            </c:forEach>
+                </p>
+                <p class="story_time" th:text="${messagelist.messageTime}"></p>
+                <p class="story_m" th:text="${messagelist.message}"></p>
+            </div>
+
+            <div id="woyaochakan" style="display: none">这里可以查看</div>
         </div>
 
         <div align="center" style="color: black">
