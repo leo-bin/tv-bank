@@ -56,4 +56,9 @@ public class VideoServiceImpl implements VideoService {
         List<VideoEntity> list = videoDAO.videolistimit6MAD();
         return list;
     }
+
+    @Override
+    public List<VideoEntity> searchByName(String name) {
+        return videoDAO.searchByName("%" + name + "%");
+    }
 }

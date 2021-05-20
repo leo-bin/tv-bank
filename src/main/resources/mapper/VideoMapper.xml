@@ -45,4 +45,11 @@
         from tv_bank.video
     </select>
 
+
+    <select id="searchByName" resultType="com.ccsu.jc.tvbank.domain.VideoEntity">
+        select *
+        from tv_bank.video
+        where videoName like #{name}
+    </select>
+
 </mapper>

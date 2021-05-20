@@ -1,5 +1,6 @@
 package com.ccsu.jc.tvbank.api;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ccsu.jc.tvbank.domain.UserEntity;
 import com.ccsu.jc.tvbank.service.impl.UserServiceImpl;
 import com.ccsu.jc.tvbank.utils.GetUUID;
@@ -23,7 +24,7 @@ import java.util.Map;
  * @apiNote user api
  */
 @Controller
-@RequestMapping("/tv-bank")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -31,21 +32,25 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public String login(String userName, String passWord, HttpServletRequest request) {
+    @ResponseBody
+    public String login(@RequestParam("userName") String userName,
+                        @RequestParam("passWord") String passWord,
+                        HttpServletRequest request) {
+        JSONObject returnJson = new JSONObject();
         boolean bl = userService.login(userName, passWord);
         if (bl) {
             //将用户的全部信息查询出来
             UserEntity list = userService.userInfo(userName);
             //将用户ID放到session里面
-            request.getSession().setAttribute("userID", list.getUserID());
-            request.getSession().setAttribute("userName", userName);
-            request.getSession().setAttribute("userHand", list.getUserHand());
-            return "index";
+            returnJson.put("code", 1);
+            returnJson.put("userName", userName);
+            returnJson.put("userHand", list.getUserHand());
         } else {
             //失败
-            request.setAttribute("PHO", "用户名或密码错误!");
+            returnJson.put("code", 0);
+            returnJson.put("msg", "用户名或密码错误!");
         }
-        return "loginnew";
+        return returnJson.toJSONString();
     }
 
 

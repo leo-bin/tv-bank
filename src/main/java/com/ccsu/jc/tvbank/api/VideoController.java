@@ -44,14 +44,6 @@ public class VideoController {
                         @RequestParam("shipingID") String shipingID, Model model) {
         // 根据视频ID查询出 此视频的所有留言
         List<MessageEntity> messagelist = messageService.messagelist(shipingID);
-
-//        for (MessageEntity message : messagelist) {
-//            // 得到用户名
-//            message.getMessageuserName();
-//        }
-
-        // 根据每个用户名查询出每个用户对应的头像地址
-
         System.out.println("dizhi=" + dizhi);
         model.addAttribute("messagelist", messagelist);
         model.addAttribute("dizhi", dizhi);
@@ -63,11 +55,17 @@ public class VideoController {
     @GetMapping("/search")
     public ModelAndView search(@RequestParam(value = "keyWord") String keyWord) {
         Map<String, Object> map = new HashMap<>(16);
+        List<VideoEntity> videos = videoService.searchByName(keyWord);
+        map.put("videos", videos);
+        return new ModelAndView("searchList", map);
+    }
 
-        // TODO: BY leo-bin 2021/5/7
-        // TODO-LIST: 模糊匹配sql（like） 查出结果封装好返回前端
 
-
+    @GetMapping("/getByCategory")
+    public ModelAndView getByCategory(@RequestParam("category") String category) {
+        Map<String, Object> map = new HashMap<>(16);
+        List<VideoEntity> videos = videoService.videoList(category);
+        map.put("videos", videos);
         return new ModelAndView("searchList", map);
     }
 

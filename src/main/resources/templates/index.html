@@ -46,152 +46,94 @@
                     </form>
                 </div>
 
-                <div class="header-top__user">
-                    <div class="login-box">
-                        <a href="/tv-bank/login">登录</a> <span></span>
-                        <a href="/tv-bank/zhuce">注册</a>
-                    </div>
-                </div>
-
-                <div class="header-top__user"
-                     style="position: fixed; z-index: 999; width: 300px; height: 170px; background-color: #FCF6EB; margin-left: 55%; margin-top: 3%"
-                     id="div2">
-                    <div id="kawayi" onmouseout="asjdh()">
-                        <div style="width: 130px; height: 160px; background-color: red; position: fixed; margin-left: 14%">
-                            <img id="imgtest" alt="" style="width: 130px; height: 160px;"
-                                 onmouseover="project()" onmouseout="about()"
-                                 src="../static/Homepage/images/1.jpg">
-                            <div style="width: 90px; height: 90px; margin-top: -113px; margin-left: -110px">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="center_header">
-                        <div align="center" style="margin-left: 60%">
-                        </div>
-                        <div align="center" style="margin-left: -100px">
-                            <span style="color: black;"></span>
-                        </div>
-
-                        <div style="background-color: black">------------------------</div>
-                    </div>
-                    <div>
-                        <br> <a href="User_full_information.jsp" style="color: red">个人信息</a>&nbsp;&nbsp;<a
-                            href="Update_login_password.jsp" style="color: red">修改密码</a>
-                        <div style="background-color: black">------------------------</div>
-                    </div>
+                <div id="header-top__user">
+                    <ul>
+                        <li id="login-success" class="login-a" style="display: none;"><a class="login-a" id="welcome"
+                                                                                         href="#">你好，欢迎你！</a></li>
+                        <li id="nologin" class="nologin-a" style="display:inline;"><a class="nologin-a"
+                                                                                      href="/tv-bank/login">游客，你好，请先登录</a>
+                        </li>
+                        <li id="nologin-item" class="nologin-a" style="display: inline;"><a class="nologin-a"
+                                                                                            href="/tv-bank/zhuce">注册</a>
+                    </ul>
                 </div>
             </div>
-
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $("#div2").hide();
-
-                })
-
-                function asjdh() {//移出
-                    $("#div2").hide();
-                }
-
-                function project() {//移入
-                    $("#div2").show();
-                }
-            </script>
-
-            <script type="text/javascript">
-                layui.use(['form', 'layer', 'jquery'], function () {
-                    // 操作对象
-                    var form = layui.form;
-
-                    //处理搜索,将搜索的关键字通过url传递给对应的页面
-                    form.on('submit(search)', function (data) {
-                        console.log(data.field);
-                        var keyWords = data.field.keyWords;
-                        console.log('ketWords=' + keyWords);
-                        var url = "search?keyWords=" + keyWords;
-                        window.open(url);
-                    })
-                });
-            </script>
-
-
         </div>
-    </div>
-    </div>
     </div>
 </header>
 
 <nav id="nav">
     <div class="page-width clearfix">
         <ul class="nav-list">
-            <li class="item item-home"><a href="/page/index" class="link">首页</a>
+            <li class="item item-home"><a href="/tv-bank/index" class="link">首页</a>
             </li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=1" class="link">
                 <div class="num">
                     <i>887</i>
                 </div>
                 动画
             </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=2" class="link">
                 <div class="num">
                     <i>23</i>
                 </div>
                 番剧
             </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=3" class="link">
                 <div class="num">
                     <i>999+</i>
                 </div>
                 音乐
             </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=1" class="link">
                 <div class="num">
                     <i>152</i>
                 </div>
                 舞蹈
             </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=2" class="link">
                 <div class="num">
                     <i>999+</i>
                 </div>
                 游戏
             </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=3" class="link">
                 <div class="num">
                     <i>999+</i>
                 </div>
                 科技
             </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=1" class="link">
                 <div class="num">
                     <i>999+</i>
                 </div>
                 生活
             </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=3" class="link">
                 <div class="num">
                     <i>77</i>
                 </div>
                 鬼畜
             </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=3" class="link">
                 <div class="num">
                     <i>416</i>
                 </div>
                 时尚
             </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=1" class="link">
                 <div class="num">
                     <i>100</i>
                 </div>
                 广告
             </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=1" class="link">
                 <div class="num">
                     <i>999+</i>
                 </div>
                 娱乐
             </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
+            <li class="item"><a href="/tv-bank/getByCategory?category=2" class="link">
                 <div class="num">
                     <i>916</i>
                 </div>
@@ -362,5 +304,39 @@
         </div>
     </div>
 </div>
+
+<!--引入外部js框架-->
+<script type="text/javascript" src="../static/layui/layui.js" charset="utf-8"></script>
+
+<!--判断用户是否登陆脚本-->
+<script type="text/javascript">
+    /*获取登陆成功之后的状态码和返回数据*/
+    var userName = sessionStorage.getItem('userName');
+    if (userName != null) {
+        //显示
+        document.getElementById("login-success").style.display = "inline";
+        document.getElementById("nologin").style.display = "none";
+        document.getElementById('welcome').innerText = userName + '，你好，欢迎你';
+    } else {
+        //隐藏
+        document.getElementById("login-success").style.display = "none";
+        document.getElementById("nologin").style.display = "inline";
+    }
+</script>
+
+<!--处理搜索-->
+<script type="text/javascript">
+    layui.use(['form', 'layer', 'jquery'], function () {
+        // 操作对象
+        var form = layui.form;
+
+        //处理搜索,将搜索的关键字通过url传递给对应的页面
+        form.on('submit(search)', function (data) {
+            var keyWords = data.field.keyWords;
+            var url = "/tv-bank/search?keyWord=" + keyWords;
+            window.open(url);
+        })
+    });
+</script>
 </body>
 </html>

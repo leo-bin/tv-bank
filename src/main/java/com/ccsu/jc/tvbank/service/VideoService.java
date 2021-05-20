@@ -51,4 +51,9 @@ public interface VideoService {
      * 随机在video 里面查询出5条记录
      */
     List<VideoEntity> videolistimit5MAD();
+
+    /**
+     * search by name
+     */
+    List<VideoEntity> searchByName(String name);
 }

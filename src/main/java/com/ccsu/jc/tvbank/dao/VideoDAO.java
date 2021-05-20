@@ -46,4 +46,9 @@ public interface VideoDAO {
      */
     int videoCount(String countvideo);
 
+    /**
+     * search by name
+     */
+    List<VideoEntity> searchByName(@Param("name") String name);
+
 }

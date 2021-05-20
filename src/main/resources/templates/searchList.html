@@ -1,11 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--引入thymeleaf模板引擎-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>搜索结果</title>
+    <link rel="stylesheet"
+          href="../static/bilibiliIndex/css/reset.css">
+    <link rel="stylesheet"
+          href="../static/bilibiliIndex/css/common.css">
+    <link rel="stylesheet"
+          href="../static/bilibiliIndex/css/index.css">
+    <script src="../static/Homepage/js/jquery.min.js"></script>
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script src="../static/bilibiliIndex/js/script.js"></script>
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
 </head>
 <body>
 
+<header id="header">
+    <div id="page_top">
+        <div class="bg-wrap">
+            <div class="bg"></div>
+            <div class="mask"></div>
+        </div>
+        <div class="header-top">
+            <div class="page-width clearfix">
+                <div class="header-top__nav">
+                    <ul>
+                        <li class="item item-home"><a href="/tv-bank/index">主站</a></li>
+                        <li class="item"><a href="/tv-bank/videoFileTop">我要投稿</a>
+                    </ul>
+                </div>
+
+                <div class="search">
+                    <!--搜索表单-->
+                    <form class="layui-form" action="#" method="post" id="sitesearch">
+                        <fieldset>
+                            <input type="text" value="搜索一下" name="keyWords"
+                                   onfocus="this.value=(this.value=='搜索一下')? '' : this.value ;"/>
+                            <button class="layui-btn-radius" lay-submit lay-filter="search" id="search" alt="搜索一下">
+                                搜
+                            </button>
+                        </fieldset>
+                    </form>
+                </div>
+
+
+                <div id="header-top__user">
+                    <ul>
+                        <li id="login-success" class="login-a" style="display: none;"><a class="login-a" id="welcome"
+                                                                                         href="#">你好，欢迎你！</a></li>
+                        <li id="nologin" class="nologin-a" style="display:inline;"><a class="nologin-a"
+                                                                                      href="/tv-bank/login">游客，你好，请先登录</a>
+                        </li>
+                        <li id="nologin-item" class="nologin-a" style="display: inline;"><a class="nologin-a"
+                                                                                            href="/tv-bank/zhuce">注册</a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div id="main">
+    <div class="page-width">
+        <!-- 搜索结果 -->
+        <div class="mainCont clearfix" id="dance" js-move="true">
+            <div class="pic-list fl" js-tab="true">
+                <ul class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
+                    <li class="item" th:each="v:${videos}">
+                        <a th:href="'video?dizhi='+${v.videoAddress}+'&shipingID='+${v.videoID}" class="img-link">
+                            <img th:src="${v.videoImage}" alt="#">
+                            <span class="mask"></span> <span class="time" th:text="${v.videoTime}"></span>
+                        </a>
+                        <div class="img-info">
+                            <a th:href="'video?dizhi='+${v.videoAddress}+'&shipingID='+${v.videoID}"></a>
+                            <div class="btm">
+                                <div class="user">
+                                    <i></i>admin
+                                </div>
+                                <div class="online" th:text="${v.videolookTime}">
+                                    <i></i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--判断用户是否登陆脚本-->
+<script type="text/javascript">
+    /*获取登陆成功之后的状态码和返回数据*/
+    var userName = sessionStorage.getItem('userName');
+    if (userName != null) {
+        //显示
+        document.getElementById("login-success").style.display = "inline";
+        document.getElementById("nologin").style.display = "none";
+        document.getElementById('welcome').innerText = userName + '，你好，欢迎你';
+    } else {
+        //隐藏
+        document.getElementById("login-success").style.display = "none";
+        document.getElementById("nologin").style.display = "inline";
+    }
+</script>
 
 </body>
 </html>
