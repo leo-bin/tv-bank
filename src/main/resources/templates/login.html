@@ -44,7 +44,7 @@
                 if (data.code === 1) {
                     alert("登陆成功");
                     //将返回数据写入会话存储中
-                    sessionStorage.setItem('userName', data.userName);
+                    sessionStorage.setItem('userInfo', result);
                     window.location.href = "/tv-bank/index";
                 } else {
                     alert("登录失败！密码错误！")

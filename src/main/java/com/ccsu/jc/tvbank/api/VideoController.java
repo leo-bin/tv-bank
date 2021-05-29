@@ -1,14 +1,16 @@
 package com.ccsu.jc.tvbank.api;
 
+import com.alibaba.fastjson.JSONObject;
+import com.ccsu.jc.tvbank.domain.req.MessageReq;
 import com.ccsu.jc.tvbank.service.VideoService;
 import com.ccsu.jc.tvbank.task.TestMain;
 import com.ccsu.jc.tvbank.domain.*;
 import com.ccsu.jc.tvbank.service.MessageService;
-import com.ccsu.jc.tvbank.service.UserService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +22,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/tv-bank")
@@ -41,16 +44,16 @@ public class VideoController {
 
     @RequestMapping("/video")
     public String video(@RequestParam("dizhi") String dizhi,
-                        @RequestParam("shipingID") String shipingID, Model model) {
+                        @RequestParam("shipingID") String shipingID,
+                        Model model) {
         // 根据视频ID查询出 此视频的所有留言
         List<MessageEntity> messagelist = messageService.messagelist(shipingID);
-        System.out.println("dizhi=" + dizhi);
         model.addAttribute("messagelist", messagelist);
         model.addAttribute("dizhi", dizhi);
         model.addAttribute("shipingID", shipingID);
-
         return "video";
     }
+
 
     @GetMapping("/search")
     public ModelAndView search(@RequestParam(value = "keyWord") String keyWord) {
@@ -69,65 +72,16 @@ public class VideoController {
         return new ModelAndView("searchList", map);
     }
 
-
-    // AJAX 提交
-    @RequestMapping(value = "ajaxTuiJian", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public void ajaxTuiJian(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        List<VideoEntity> list = videoService.videolistimit7();
-        // 设置编码
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        Gson gson = new Gson();
-        String sbb = gson.toJson(list);
-        out.write(sbb);
-    }
-
-    // AJAX 提交
-    @RequestMapping(value = "ajaxTuiJian2", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @PostMapping("/leaveMessage")
     @ResponseBody
-    public void webajax2(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        List<VideoEntity> list = videoService.videolistimit5MAD();
-        // 设置编码
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        Gson gson = new Gson();
-        String sbb = gson.toJson(list);
-        out.write(sbb);
-    }
-
-
-    // 将数据库里面所有的视频查询出来 发送到首页面
-    @RequestMapping("testshabi.sf")
-    public String testshabi(HttpServletRequest request) {
-        // request.setAttribute("test", "测试");
-        int tag1 = videoService.videoCount("1");
-        // System.out.println("视频一共有"+tag1);
-        request.setAttribute("tag1", tag1);
-
-        int tag4 = 12;
-        // 每页显示多少
-        request.setAttribute("tag4", tag4);
-        return "DisplayVideo";
-    }
-
-    // AJAX 提交
-    @RequestMapping(value = "ajaxtijiao1.sf", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    @ResponseBody
-    public void ajaxtijiao(HttpServletRequest request, HttpServletResponse response, String State,
-                           String dangqianye, int meiyexianshiduoshaoge) throws IOException {
-        int dangqianye2 = Integer.parseInt(dangqianye);
-        // State
-        List<VideoEntity> list = videoService.pageVideoList(State, dangqianye2, meiyexianshiduoshaoge);
-
-        // 设置编码
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        Gson gson = new Gson();
-        String sbb = gson.toJson(list);
-        out.write(sbb);
+    public String leaveMessage(@RequestBody MessageReq messageReq) {
+        JSONObject returnJsonObj = new JSONObject();
+        if (messageService.message(messageReq)) {
+            returnJsonObj.put("code", 200);
+        } else {
+            returnJsonObj.put("code", -200);
+        }
+        return returnJsonObj.toJSONString();
     }
 
 
@@ -138,107 +92,90 @@ public class VideoController {
         return "videoFileTop";
     }
 
+    @PostMapping("/upLoadFile")
+    @ResponseBody
+    public String fileUpLoad(@RequestParam("files") MultipartFile[] files,
+                             @RequestParam("biaoti") String biaoti,
+                             @RequestParam("Fruit") String fruit,
+                             @RequestParam("upName") String upName) {
+        JSONObject returnJon = new JSONObject();
 
-    @RequestMapping("/upLoadFile")
-    public String videoFileTop(@RequestParam("files") MultipartFile[] files,
-                               HttpServletRequest request, String biaoti,
-                               String Fruit) {
-        System.out.println("用户输入的标题为:" + biaoti + Fruit);
-        if (files != null && files.length > 0) {
+        //创建输入输出流
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+
+        try {
+            String videoBasePath = "/static/videolook/";
+            String imgBasePath = "/static/videolook/videolookimg/";
+            String windowVideoPath = "C:\\MyGIT\\tv-bank\\src\\main\\resources\\static\\videolook\\";
+            String windowImgPath = "C:\\MyGIT\\tv-bank\\src\\main\\resources\\static\\videolook\\videolookimg\\";
+            String videoPath = "";
+            String imgPath = "";
+
             // 循环获取file数组中得文件
             for (int i = 0; i < files.length; i++) {
                 MultipartFile file = files[i];
-                // 保存文件
-                System.out.println("正在调用保存方法");
-                // saveFile(file);
-                // 判断文件是否为空
-                if (!file.isEmpty()) {
-                    try {
-                        // new 出一个实体
-                        VideoTopEntity video = new VideoTopEntity();
-                        // 放入session中
-                        request.getSession().setAttribute("video", video);// 放入到session中
 
-                        System.out.println("文件总大小" + file.getSize());
-                        // 文件保存路径
-                        String filePath = "C:/videotest/" + file.getOriginalFilename();
-                        System.out.println(filePath);
-                        /******************** 测试 **************************/
-                        File storeFile = new File(filePath);
-                        // 得到输入流
-                        InputStream in = file.getInputStream();
-                        // 得到文件的输出流
-                        OutputStream out = new FileOutputStream(storeFile);
-                        // 文件总大小
-                        long max = file.getSize();
-                        video.setFileSize(max);
-                        video.setFilename(file.getOriginalFilename());
-                        // 剩余大小
-                        long other = max;
-                        int len = 0;// 读取写入长度
-                        // 读写缓冲
-                        byte[] b = new byte[300];
-                        // 循环从输入流写入到输出流,结束循环是len==-1
-                        while ((len = in.read(b)) != -1) {
-                            out.write(b, 0, len);
-                            other -= len;
-                            video.setFileSY(other);
-                            // System.out.println("剩余大小:"+other);
-                            // 给DTO设置other
-                            // dto.setOther(other);
-                            // System.out.println("总大小="+max+"剩余大小="+other);
-                            // z总 max
-                            // 剩余 other
-                            // 传了 max-other
-                            float zong = (float) (Integer.parseInt(String.valueOf(max)));
-                            int shengxia = Integer.parseInt(String.valueOf(other));
-                            float ii3 = (float) zong - shengxia;// 传了多少
-                            if (shengxia != 0) {
-                                int baifenbi = (int) ((ii3 / zong) * 100);
-                                video.setBaifenbi(baifenbi);
-                            }
-                        }
-                        out.flush();// 刷新
-                        out.close();// 关闭
-                        in.close();// 关闭
-                        video.setTag(1);// 标记为1的时候表示上传成功
-                        System.out.println("上传成功");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                //获取文件的输入流
+                inputStream = file.getInputStream();
+                //获取上传时的文件名
+                String fileName = file.getOriginalFilename();
+                //注意是路径+文件名
+                File targetFile = new File((i == 0 ? windowVideoPath : windowImgPath) + fileName);
+
+                //判断文件父目录是否存在
+                if (!targetFile.getParentFile().exists()) {
+                    //不存在就创建一个
+                    targetFile.getParentFile().mkdir();
+                }
+
+                //获取文件的输出流
+                outputStream = new FileOutputStream(targetFile);
+                //最后使用资源访问器FileCopyUtils的copy方法拷贝文件
+                FileCopyUtils.copy(inputStream, outputStream);
+
+                if (i == 0) {
+                    videoPath = videoBasePath + fileName;
+                } else {
+                    imgPath = imgBasePath + fileName;
+                }
+            }
+
+            VideoEntity videoEntity = new VideoEntity();
+            videoEntity.setUpName(upName);
+            videoEntity.setCategoryName("");
+            videoEntity.setVideoAddress(videoPath);
+            videoEntity.setVideoCategory(fruit);
+            videoEntity.setVideoID(UUID.randomUUID().toString());
+            videoEntity.setVideoImage(imgPath);
+            videoEntity.setVideoName(biaoti);
+            videoEntity.setVideoState("1");
+
+            videoService.insertVideo(videoEntity);
+
+            //告诉页面上传成功了
+            returnJon.put("code", 200);
+        } catch (IOException e) {
+            e.printStackTrace();
+            returnJon.put("code", -200);
+        } finally {
+            //无论成功与否，都有关闭输入输出流
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
-        System.out.println("上传结束");
-        return "videoFileTop";
-    }
-
-
-    /************************* 这里写个百分比的AJAX *******************************/
-    @RequestMapping(value = "baifenbiAJAX", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    @ResponseBody
-    public void baifenbiAJAX(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        if (request.getSession().getAttribute("video") == null) {
-            // new 出一个实体
-            VideoTopEntity video = new VideoTopEntity();
-            video.setBaifenbi(0);
-            video.setFilename("请稍后..");
-            video.setFileSize(0);
-            video.setFileSY(0);
-            video.setTag(0);
-            // 放入session中
-            request.getSession().setAttribute("video", video);// 放入到session中
-        } else {
-            VideoTopEntity video = (VideoTopEntity) request.getSession().getAttribute("video");
-            // 设置编码
-            response.setCharacterEncoding("UTF-8");
-            request.setCharacterEncoding("UTF-8");
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            String sbb = gson.toJson(video);
-            out.write(sbb);
-        }
+        return returnJon.toJSONString();
     }
 
 }

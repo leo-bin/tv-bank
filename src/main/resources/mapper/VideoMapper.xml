@@ -4,6 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ccsu.jc.tvbank.dao.VideoDAO">
 
+    <insert id="insert" parameterType="com.ccsu.jc.tvbank.domain.VideoEntity">
+        insert into tv_bank.video(videoID, videoName, videoImage, videoAddress,
+                                  videoState, videoCategory, upName, categoryName)
+        VALUES (#{videoID}, #{videoName}, #{videoImage}, #{videoAddress},
+                #{videoState}, #{videoCategory}, #{upName}, #{categoryName})
+    </insert>
+
     <select id="videolist" resultType="com.ccsu.jc.tvbank.domain.VideoEntity" parameterType="string">
         select *
         from tv_bank.video

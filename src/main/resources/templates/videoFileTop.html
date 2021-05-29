@@ -6,7 +6,7 @@
     <script src="/static/Homepage/js/jquery-2.0.0.js"></script>
     <link rel="stylesheet" href="/static/Homepage/mycssAndimg/css.css">
 </head>
-<body style="background-image: url(/static/Homepage/mycssAndimg/timg.jpg);">
+<body style="background-image: url(/static/Homepage/mycssAndimg/4.jpg);">
 <div>
     <div>
         <form id="upload_form">
@@ -50,8 +50,25 @@
 
     <script type="text/javascript">
         $("#fanhui").click(function () {
-            location.href = "/page/index";
+            location.href = "/tv-bank/index";
         })
+    </script>
+
+    <!--判断用户是否登陆脚本-->
+    <script type="text/javascript">
+        /*获取登陆成功之后的状态码和返回数据*/
+        var userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+        var userName = userInfo.userName;
+        if (userName != null) {
+            //显示
+            document.getElementById("login-success").style.display = "inline";
+            document.getElementById("nologin").style.display = "none";
+            document.getElementById('welcome').innerText = userName + '，你好，欢迎你';
+        } else {
+            //隐藏
+            document.getElementById("login-success").style.display = "none";
+            document.getElementById("nologin").style.display = "inline";
+        }
     </script>
 
     <script>
@@ -110,45 +127,28 @@
             //判断结束
             $("#tougao").attr('disabled', true); //将button变成不可点击
             var formData = new FormData($("#upload_form")[0]);
+            var userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+            var userName = userInfo.userName;
+            formData.append("upName", userName);
             $.ajax({
-                url: 'videoFileTop.sf',
+                url: '/tv-bank/upLoadFile',
                 type: 'POST',
                 data: formData,
-                async: true,  //设置为同步
+                async: true,
                 cache: false,
                 contentType: false,
                 processData: false,
                 success: function (returndata) {
-                    //$("#tougao").attr('disabled',false); //将button变成可点击
+                    var returnJson = JSON.parse(returndata);
+                    if (returnJson.code === 200) {
+                        alert("上传成功！");
+                        $("#tougao").attr('disabled', false); //将button变成不可点击
+                    } else {
+                        alert("上传失败！");
+                    }
                 },
                 error: function (returndata) {
                     alert(returndata);
-                }
-            });
-            $(function () {
-                //iCount获取setInterval句柄
-                var iCount = setInterval(GetBack, 100);
-
-                function GetBack() {
-                    var html = "";
-                    $.post("baifenbiAJAX", function (r) {
-                        //把json字符串转换为json对象
-                        var obj = eval("(" + r + ")");
-                        var a = obj.baifenbi;
-                        a += 1;
-                        html += "<div id='none2' style='width: " + a + "%;height: 60px;background-color: blue;'>";
-                        html += "<h1>" + a + "%</h1>";
-                        html += "</div>";
-                        //alert(html);
-                        $("#none").html(html);
-                        html = "";
-                        //如果标记不为 0  表示上传完成
-                        if (obj.tag != 0) {
-                            //alert("进入");
-                            //清除setInterval
-                            clearInterval(iCount);
-                        }
-                    });
                 }
             });
         });

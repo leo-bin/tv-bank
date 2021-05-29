@@ -19,6 +19,10 @@ public class VideoServiceImpl implements VideoService {
     @Autowired
     private VideoDAO videoDAO;
 
+    @Override
+    public void insertVideo(VideoEntity videoEntity) {
+        videoDAO.insert(videoEntity);
+    }
 
     @Override
     public List<VideoEntity> videoList(String videoCategory) {

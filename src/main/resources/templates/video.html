@@ -155,8 +155,6 @@
                             <li class="item"><a href="/tv-bank/videoFileTop">我要投稿</a>
                         </ul>
                     </div>
-
-
                     <div id="header-top__user">
                         <ul>
                             <li id="login-success" class="login-a" style="display: none;"><a class="login-a"
@@ -188,7 +186,6 @@
         });
 </script>
 
-
 <!-- 评论区 -->
 <div class="all-comments">
     <div class="all-comments-info">
@@ -197,7 +194,7 @@
         <div class="box">
             <input type="text" id="shipingID" style="display: none" name="shipingID" value="shipingID">
             <textarea placeholder="请输入留言内容---------内容不超过150字" id="message" required="" name="message"></textarea>
-            <input type="button" id="button" value="发表">
+            <input type="button" id="button" value="发表" onclick="liuyan()">
             <div class="clearfix"></div>
         </div>
     </div>
@@ -276,7 +273,6 @@
             return init;
         }();
     </script>
-
     <div align="center">
         <button type="button" id="buttonhide">动态留言板</button>&nbsp;&nbsp;&nbsp;&nbsp;
         <button type="button" id="buttonhide2">静态留言板
@@ -296,8 +292,6 @@
                     <span style="color: blue;" th:text="'留言时间:'+${messagelist.messageTime}">&nbsp;&nbsp;&nbsp;</span>
                 </p>
             </li>
-
-
         </ul>
     </div>
 
@@ -313,11 +307,9 @@
             $("#buttonhide2").click(function () {
                 $("#danmu").hide();
                 $("#texthide").show();
-
             });
 
             $("#huifu").click(function () {
-                //alert("回复未实现!");
                 //这里点击之后弹出一个div
                 $("#woyaochakan").show();
             });
@@ -401,6 +393,7 @@
             top: 0;
             right: 0;
         }
+
     </style>
 
     <div class="ylcon" id="texthide">
@@ -408,8 +401,6 @@
             所有留言
         </p>
         <div id="messDivId">
-
-
             <div class="story" th:each="messagelist:${messagelist}">
                 <div class="opbtn"></div>
                 <p class="story_t" th:text="${messagelist.messageuserName}"><span style="margin-left: 85%;">
@@ -419,7 +410,6 @@
                 <p class="story_time" th:text="${messagelist.messageTime}"></p>
                 <p class="story_m" th:text="${messagelist.message}"></p>
             </div>
-
             <div id="woyaochakan" style="display: none">这里可以查看</div>
         </div>
 
@@ -446,7 +436,8 @@
 <!--判断用户是否登陆脚本-->
 <script type="text/javascript">
     /*获取登陆成功之后的状态码和返回数据*/
-    var userName = sessionStorage.getItem('userName');
+    var userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    var userName = userInfo.userName;
     if (userName != null) {
         //显示
         document.getElementById("login-success").style.display = "inline";
@@ -456,6 +447,41 @@
         //隐藏
         document.getElementById("login-success").style.display = "none";
         document.getElementById("nologin").style.display = "inline";
+    }
+</script>
+
+<!--处理留言-->
+<script type="text/javascript" th:inline="javascript">
+
+    function liuyan() {
+        var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+        var dizhi = [[${dizhi}]];
+        var shipingID = [[${shipingID}]];
+        var mesObj = {
+            "content": $('#message').val(),
+            "userId": userInfo.userId,
+            "name": userInfo.userName,
+            "userHand": userInfo.userHand,
+            "videoId": shipingID
+        };
+        console.log("content=" + $('#message').val());
+        console.log(JSON.stringify(mesObj));
+        $.ajax({
+            type: "POST",
+            url: '/tv-bank/leaveMessage',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(mesObj),
+            success: function (result) {
+                var data = JSON.parse(result);
+                if (data.code === 200) {
+                    alert("感谢你的留言！");
+                    //刷新留言列表，暂时用刷新原页面，重新加载留言数据
+                    window.location.replace("video?dizhi=" + dizhi + "&shipingID=" + shipingID);
+                } else {
+                    alert("留言失败！请稍后重试！")
+                }
+            }
+        });
     }
 </script>
 </body>

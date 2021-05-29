@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface VideoService {
 
+    void insertVideo(VideoEntity videoEntity);
+
 
     /**
      * 将video 全部信息全部查询出来
@@ -41,8 +43,6 @@ public interface VideoService {
 
     /**
      * 随机在video 里面查询出6条记录
-     *
-     * @return
      */
     List<VideoEntity> videolistimit6MAD();
 

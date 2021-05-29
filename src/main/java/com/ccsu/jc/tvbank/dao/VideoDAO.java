@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public interface VideoDAO {
 
+    void insert(VideoEntity videoEntity);
+
     /**
      * 将video 全部信息全部查询出来
      */

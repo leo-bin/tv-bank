@@ -90,10 +90,12 @@
         </div>
     </div>
 </div>
+
 <!--判断用户是否登陆脚本-->
 <script type="text/javascript">
     /*获取登陆成功之后的状态码和返回数据*/
-    var userName = sessionStorage.getItem('userName');
+    var userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    var userName = userInfo.userName;
     if (userName != null) {
         //显示
         document.getElementById("login-success").style.display = "inline";

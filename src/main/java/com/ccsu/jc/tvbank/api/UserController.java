@@ -45,6 +45,7 @@ public class UserController {
             returnJson.put("code", 1);
             returnJson.put("userName", userName);
             returnJson.put("userHand", list.getUserHand());
+            returnJson.put("userId", list.getUserID());
         } else {
             //失败
             returnJson.put("code", 0);

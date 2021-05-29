@@ -92,9 +92,7 @@
 </script>
 
 <body>
-
 <div class="diyoumask" style="height: 2000px;"></div>
-
 <script type="text/javascript">
     $(function () {
         $(".contactusdiyou").hover(function () {
@@ -109,8 +107,6 @@
         });
     });
 </script>
-
-
 <!-- 上方是导航栏 -->
 <div style="background-color: #6C89B2; margin-top: 0px">
     <div style="margin-left: 90%;">
@@ -147,7 +143,6 @@
         </header>
     </div>
 </div>
-
 <div>
     <img src="../static/Homepage/images/bilibili.png" style="width: 100%;"/>
 </div>
@@ -222,7 +217,9 @@
 <!--判断用户是否登陆脚本-->
 <script type="text/javascript">
     /*获取登陆成功之后的状态码和返回数据*/
-    var userName = sessionStorage.getItem('userName');
+    var userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    var userName = userInfo.userName;
+    console.log("userName=" + userName);
     if (userName != null) {
         //显示
         document.getElementById("login-success").style.display = "inline";
